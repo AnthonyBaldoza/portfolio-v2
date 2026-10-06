@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://anthonybaldoza.github.io/portfolio-v2/sitemap.xml

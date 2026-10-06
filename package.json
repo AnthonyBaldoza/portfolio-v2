@@ -1,0 +1,9 @@
+{
+  "name": "portfolio-v2",
+  "version": "2.0.0",
+  "private": true,
+  "scripts": {
+    "build": "esbuild assets/css/styles.css --minify --outfile=assets/css/styles.min.css && esbuild assets/js/main.js --minify --outfile=assets/js/main.min.js"
+  },
+  "devDependencies": { "esbuild": "^0.25.0" }
+}

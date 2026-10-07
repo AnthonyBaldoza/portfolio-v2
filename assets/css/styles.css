@@ -896,3 +896,6 @@ footer {
     transform: none;
   }
 }
+
+
+.cert + .cert{margin-top:16px}

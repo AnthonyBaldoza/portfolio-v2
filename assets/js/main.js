@@ -15,14 +15,27 @@
     );
     meta.content = t === "dark" ? "#0A0A0B" : "#FAFAFA";
   };
+
   applyTheme(root.dataset.theme);
-  themeBtn.addEventListener("click", () => {
+    themeBtn.addEventListener("click", () => {
     const next = root.dataset.theme === "dark" ? "light" : "dark";
-    applyTheme(next);
-    try {
-      localStorage.setItem("theme", next);
-    } catch (e) {}
+    const swap = () => {
+      applyTheme(next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    };
+    if (!document.startViewTransition || reduce) return swap();
+    const r = themeBtn.getBoundingClientRect();
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    document.startViewTransition(swap).ready.then(() => {
+      root.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
+        { duration: 650, easing: "ease-in-out", pseudoElement: "::view-transition-new(root)" }
+      );
+    });
   });
+
+
   // Follow system changes only until the visitor makes their own choice.
   matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (e) => {
     try {
@@ -361,4 +374,44 @@
   });
 
   $("#yr").textContent = new Date().getFullYear();
+
+})();
+
+
+/* Morph: reveal the second photo only under the cursor */
+(() => {
+  const morph = document.getElementById("morph");
+  if (!morph) return;
+  const RADIUS = 40; // <-- change this number to make the circle bigger or smaller
+  let rect = null;
+  let x = 0;
+  let y = 0;
+  let ticking = false;
+
+  const draw = () => {
+    morph.style.setProperty("--x", x + "px");
+    morph.style.setProperty("--y", y + "px");
+    ticking = false;
+  };
+  const move = (e) => {
+    if (!rect) rect = morph.getBoundingClientRect();
+    x = e.clientX - rect.left;
+    y = e.clientY - rect.top;
+    morph.style.setProperty("--r", RADIUS + "px");
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(draw);
+    }
+  };
+  const hide = () => {
+    rect = null;
+    morph.style.setProperty("--r", "0px");
+  };
+
+  morph.addEventListener("pointerenter", () => {
+    rect = morph.getBoundingClientRect();
+  });
+  morph.addEventListener("pointermove", move);
+  morph.addEventListener("pointerleave", hide);
+  morph.addEventListener("pointercancel", hide);
 })();

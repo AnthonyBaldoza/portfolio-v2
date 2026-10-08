@@ -205,20 +205,32 @@
         <div class="wrap">
           <h2>Building software end to end</h2>
           <div class="about reveal">
-            <img
-              src="assets/img/avatar-480.webp"
-              srcset="
-                assets/img/avatar-240.webp 240w,
-                assets/img/avatar-480.webp 480w
-              "
-              sizes="200px"
-              width="480"
-              height="480"
-              alt="Portrait of Anthony Baldoza"
-              class="avatar"
-              loading="lazy"
-              decoding="async"
-            />
+                        <div class="morph" id="morph">
+              <img
+                class="base"
+                src="assets/img/avatar-480.webp"
+                srcset="
+                  assets/img/avatar-240.webp 240w,
+                  assets/img/avatar-480.webp 480w
+                "
+                sizes="200px"
+                width="480"
+                height="480"
+                alt="Portrait of Anthony Baldoza"
+                loading="lazy"
+                decoding="async"
+              />
+              <img
+                class="alt"
+                src="assets/img/avatar-alt.webp"
+                width="480"
+                height="480"
+                alt=""
+                aria-hidden="true"
+                loading="lazy"
+                decoding="async"
+              />
+            </div>
             <div class="prose">
               <p>
                 I'm an IT student who got into full stack development by wanting
@@ -579,7 +591,7 @@
           </li>
           <li>
             <a
-              href="https://www.linkedin.com/in/anthony-baldoza-57869233a/?isSelfProfile=true"
+              href="https://www.linkedin.com/in/anthony-baldoza-57869233a/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"

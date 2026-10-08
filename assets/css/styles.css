@@ -927,3 +927,61 @@ footer {
   border-color: var(--accent);
   translate: 0 -2px;
 }
+
+/* Morph: second photo shows only around the cursor */
+.morph {
+  position: relative;
+  overflow: hidden;
+  width: 200px;
+  height: 200px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  contain: paint;
+}
+.morph img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media (max-width: 700px) {
+  .morph {
+    width: 128px;
+    height: 128px;
+  }
+}
+.morph img.alt {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: none !important;
+  mix-blend-mode: normal !important;
+  opacity: 1 !important;
+  transform: none !important;
+  animation: none !important;
+  pointer-events: none;
+  clip-path: circle(var(--r, 0px) at var(--x, 50%) var(--y, 50%)) !important;
+    transition: none;
+  will-change: clip-path;
+}
+.morph::before,
+.morph::after {
+  display: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  .morph img.alt {
+    transition: none;
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  z-index: 9999;
+}
+
